@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Config;
 
 abstract class AbstractApi
 {
-
     public function __construct(protected PendingRequest $httpClient)
     {
         $baseUrl = Config::get('n8n.api.base_url');
@@ -22,14 +21,34 @@ abstract class AbstractApi
 
     /**
      * Proxy HTTP calls through the root client.
+     *
      * @throws ConnectionException
      * @throws RequestException
      */
     protected function request(string $method, string $uri, array $data = []): array
     {
+        if ($method == 'get') {
+            $data = $this->prepareQuery($data);
+        }
 
         return $this->httpClient
             ->{$method}($uri, $data)
             ->json();
+
+    }
+
+    private function prepareQuery(array $data): array
+    {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $data[$key] = $this->prepareQuery($value);
+            } elseif (is_null($value)) {
+                unset($data[$key]);
+            } elseif (is_bool($value)) {
+                $data[$key] = $value ? 'true' : 'false';
+            }
+        }
+
+        return $data;
     }
 }
