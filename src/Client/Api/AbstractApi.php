@@ -8,11 +8,8 @@ use Illuminate\Http\Response;
 
 abstract class AbstractApi
 {
-    protected N8nClient $client;
-
-    public function __construct(N8nClient $client)
+    public function __construct(protected N8nClient $client)
     {
-        $this->client = $client;
     }
 
     /**
