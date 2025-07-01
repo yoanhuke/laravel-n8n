@@ -30,9 +30,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static array webhookRequest(string $method, string $uri, array $data = [])
  *
  */
-class N8nClient extends Facade {
-    protected static function getFacadeAccessor(): string {
+class N8nClient extends Facade
+{
+    protected static function getFacadeAccessor(): string
+    {
         return 'n8n';
     }
 }
-
