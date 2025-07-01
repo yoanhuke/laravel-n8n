@@ -11,7 +11,7 @@ class Webhooks
 
     private N8nClient $client;
 
-    public function __construct(N8nClient $client, $method)
+    public function __construct(N8nClient $client, string $method)
     {
         $this->client = $client;
         $this->method = strtolower($method);
