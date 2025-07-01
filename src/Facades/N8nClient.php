@@ -25,10 +25,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static Projects projects()
  * @method static SourceControl sourceControl()
  *
- * API request methods
- * @method static array apiRequest(string $method, string $uri, array $data = [])
- * @method static array webhookRequest(string $method, string $uri, array $data = [])
- *
  */
 class N8nClient extends Facade
 {

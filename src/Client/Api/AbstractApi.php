@@ -2,14 +2,21 @@
 
 namespace KayedSpace\N8n\Client\Api;
 
-use KayedSpace\N8n\Client\N8nClient;
 use Illuminate\Http\Client\ConnectionException;
-use Illuminate\Http\Response;
+use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Support\Facades\Config;
 
 abstract class AbstractApi
 {
-    public function __construct(protected N8nClient $client)
+
+    public function __construct(protected PendingRequest $httpClient)
     {
+        $baseUrl = Config::get('n8n.api.base_url');
+        $key = Config::get('n8n.api.key');
+        $this->httpClient = $httpClient->baseUrl($baseUrl)->withHeaders([
+            'X-N8N-API-KEY' => $key,
+            'Accept' => 'application/json',
+        ]);
     }
 
     /**
@@ -18,6 +25,9 @@ abstract class AbstractApi
      */
     protected function request(string $method, string $uri, array $data = []): array
     {
-        return $this->client->apiRequest($method, $uri, $data);
+
+        return $this->httpClient
+            ->{$method}($uri, $data)
+            ->json();
     }
 }

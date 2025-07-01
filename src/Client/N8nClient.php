@@ -2,11 +2,11 @@
 
 namespace KayedSpace\N8n\Client;
 
-use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use KayedSpace\N8n\Client\Api\Audit;
+use KayedSpace\N8n\Client\Api\Credentials;
 use KayedSpace\N8n\Client\Api\Executions;
 use KayedSpace\N8n\Client\Api\Projects;
 use KayedSpace\N8n\Client\Api\SourceControl;
@@ -31,87 +31,53 @@ class N8nClient
             ->when($retry, fn($request) => $request->retry($retry));
     }
 
-    /**
-     * @throws ConnectionException
-     */
-    public function apiRequest(string $method, string $uri, array $data = []): array
+    public function webhooks($method = 'post'): Webhooks
     {
-        $baseUrl = Config::get('n8n.api.base_url');
-        $key = Config::get('n8n.api.key');
-
-        return $this->httpClient
-            ->baseUrl($baseUrl)
-            ->withHeaders([
-                'X-N8N-API-KEY' => $key,
-                'Accept' => 'application/json',
-            ])
-            ->{$method}($uri, $data)
-            ->json();
-    }
-
-    /**
-     * @throws ConnectionException
-     */
-    public function webhookRequest(string $method, string $uri, array $data = []): ?array
-    {
-        $baseUrl = Config::get('n8n.webhook.base_url');
-        $username = Config::get('n8n.webhook.username');
-        $password = Config::get('n8n.webhook.password');
-
-        return $this->httpClient
-            ->baseUrl($baseUrl)
-            ->when($username && $password, fn($request) => $request->withBasicAuth($username, $password))
-            ->{$method}($uri, $data)
-            ->json();
-    }
-
-    public function webhooks(string $method = 'post'): Webhooks
-    {
-        return new Webhooks($this, $method);
+        return new Webhooks($this->httpClient, $method);
     }
 
     public function audit(): Audit
     {
-        return new Audit($this);
+        return new Audit($this->httpClient);
     }
 
-    public function credentials(): Api\Credentials
+    public function credentials(): Credentials
     {
-        return new Api\Credentials($this);
+        return new Credentials($this->httpClient);
     }
 
     public function executions(): Executions
     {
-        return new Executions($this);
+        return new Executions($this->httpClient);
     }
 
     public function workflows(): Workflows
     {
-        return new Workflows($this);
+        return new Workflows($this->httpClient);
     }
 
     public function tags(): Tags
     {
-        return new Tags($this);
+        return new Tags($this->httpClient);
     }
 
     public function users(): Users
     {
-        return new Users($this);
+        return new Users($this->httpClient);
     }
 
     public function variables(): Variables
     {
-        return new Variables($this);
+        return new Variables($this->httpClient);
     }
 
     public function projects(): Projects
     {
-        return new Projects($this);
+        return new Projects($this->httpClient);
     }
 
     public function sourceControl(): SourceControl
     {
-        return new SourceControl($this);
+        return new SourceControl($this->httpClient);
     }
 }
