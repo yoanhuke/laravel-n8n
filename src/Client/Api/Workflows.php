@@ -88,5 +88,4 @@ class Workflows extends AbstractApi
     {
         return $this->request('put', "/workflows/{$id}/tags", $tagIds);
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
-namespace KayedSpace\N8n\Client\Api;
 
+namespace KayedSpace\N8n\Client\Api;
 
 class Audit extends AbstractApi
 {
@@ -9,4 +9,3 @@ class Audit extends AbstractApi
         return $this->request('post', '/audit', ['additionalOptions' => $additionalOptions]);
     }
 }
-

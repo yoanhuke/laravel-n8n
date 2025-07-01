@@ -2,8 +2,6 @@
 
 namespace KayedSpace\N8n\Client\Api;
 
-
-
 use Illuminate\Http\Client\ConnectionException;
 
 class Users extends AbstractApi

@@ -12,7 +12,7 @@ class N8nServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/n8n.php', 'n8n');
         $this->app->bind('n8n', fn ($app) => new N8nClient);
-}
+    }
 
     public function boot(): void
     {

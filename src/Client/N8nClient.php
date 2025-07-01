@@ -22,14 +22,12 @@ class N8nClient
 
     public function __construct()
     {
-
         $timeout = Config::get('n8n.timeout');
         $throw = Config::get('n8n.throw');
         $retry = Config::get('n8n.retry');
         $this->httpClient = Http::when($timeout, fn($request) => $request->timeout($timeout))
             ->when($throw, fn($request) => $request->throwIf($throw))
             ->when($retry, fn($request) => $request->retry($retry));
-
     }
 
     /**
