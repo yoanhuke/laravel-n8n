@@ -39,5 +39,14 @@
     "php": ">=8.2",
     "illuminate/support": ">=10",
     "illuminate/http": ">=10"
+  },
+  "require-dev": {
+    "pestphp/pest": "^3.8",
+    "pestphp/pest-plugin-laravel": "^3.2"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
   }
 }
