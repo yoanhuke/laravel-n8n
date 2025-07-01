@@ -61,7 +61,7 @@ N8N_WEBHOOK_PASSWORD=your_webhook_password
 ## 🚀 Quick Start
 
 ```php
-use N8nClient;
+use KayedSpace\N8n\Facades\N8nClient;
 
 // trigger webhook
 $webhookTrigger =N8nClient::webhooks()->request("path-to-webhook",$payload);
@@ -124,9 +124,9 @@ invoked by an account with owner privileges.
 **Example:**
 
 ```php
-$schema = $n8n->credentials()->schema('slackApi');
+$schema = N8nClient::credentials()->schema('slackApi');
 
-$n8n->credentials()->create([
+N8nClient::credentials()->create([
     'name' => 'Slack Token',
     'type' => 'slackApi',
     'data' => [
@@ -147,13 +147,13 @@ $n8n->credentials()->create([
 
 ```php
 // Get a list of executions filtered by status
-$executions = $n8n->executions()->list(['status' => 'success']);
+$executions = N8nClient::executions()->list(['status' => 'success']);
 
 // Get detailed execution data
-$execution = $n8n->executions()->get(101, true);
+$execution = N8nClient::executions()->get(101, true);
 
 // Delete an execution
-$n8n->executions()->delete(101);
+N8nClient::executions()->delete(101);
 ```
 
 ### 🚧 Projects
@@ -172,18 +172,18 @@ $n8n->executions()->delete(101);
 
 ```php
 // Create a project
-$project = $n8n->projects()->create(['name' => 'DevOps', 'description' => 'CI/CD flows']);
+$project = N8nClient::projects()->create(['name' => 'DevOps', 'description' => 'CI/CD flows']);
 
 // Add users
-$n8n->projects()->addUsers($project['id'], [
+N8nClient::projects()->addUsers($project['id'], [
   ['userId' => 'abc123', 'role' => 'member'],
 ]);
 
 // Promote user role
-$n8n->projects()->changeUserRole($project['id'], 'abc123', 'admin');
+N8nClient::projects()->changeUserRole($project['id'], 'abc123', 'admin');
 
 // Delete the project
-$n8n->projects()->delete($project['id']);
+N8nClient::projects()->delete($project['id']);
 ```
 
 ### 📝 Source Control
@@ -195,7 +195,7 @@ $n8n->projects()->delete($project['id']);
 **Example:**
 
 ```php
-$syncStatus = $n8n->sourceControl()->pull([
+$syncStatus = N8nClient::sourceControl()->pull([
     'projectIds' => ['project-1', 'project-2'],
 ]);
 ```
@@ -215,9 +215,9 @@ $syncStatus = $n8n->sourceControl()->pull([
 **Example:**
 
 ```php
-$tag = $n8n->tags()->create(['name' => 'Marketing']);
-$updated = $n8n->tags()->update($tag['id'], ['name' => 'Sales']);
-$all = $n8n->tags()->list();
+$tag = N8nClient::tags()->create(['name' => 'Marketing']);
+$updated = N8nClient::tags()->update($tag['id'], ['name' => 'Sales']);
+$all = N8nClient::tags()->list();
 ```
 
 ### 🙍 Users
@@ -234,12 +234,12 @@ $all = $n8n->tags()->list();
 
 ```php
 // Invite users
-$n8n->users()->create([
+N8nClient::users()->create([
   ['email' => 'dev@example.com', 'role' => 'member']
 ]);
 
 // Promote to admin
-$n8n->users()->changeRole('dev@example.com', 'admin');
+N8nClient::users()->changeRole('dev@example.com', 'admin');
 ```
 
 ### 🔠 Variables
@@ -255,13 +255,13 @@ $n8n->users()->changeRole('dev@example.com', 'admin');
 
 ```php
 // Create a new variable
-$n8n->variables()->create(['key' => 'ENV_MODE', 'value' => 'production']);
+N8nClient::variables()->create(['key' => 'ENV_MODE', 'value' => 'production']);
 
 // Update the variable
-$n8n->variables()->update('ENV_MODE', ['value' => 'staging']);
+N8nClient::variables()->update('ENV_MODE', ['value' => 'staging']);
 
 // Delete the variable
-$n8n->variables()->delete('ENV_MODE');
+N8nClient::variables()->delete('ENV_MODE');
 ```
 
 ### 🔄 Workflows
@@ -283,8 +283,8 @@ $n8n->variables()->delete('ENV_MODE');
 
 ```php
 // Create and activate a workflow
-$wf = $n8n->workflows()->create([...]);
-$n8n->workflows()->activate($wf['id']);
+$wf = N8nClient::workflows()->create([...]);
+N8nClient::workflows()->activate($wf['id']);
 
 ```
 
@@ -304,7 +304,7 @@ Please adhere to PSR-12 and include tests where applicable.
 
 If you encounter any issues or have questions:
 
-* Open an issue on the GitHub repository
+* Open an issue in the GitHub repository
 * Use Discussions for non-bug topics or feature proposals
 * Pull requests are always welcome for fixes and improvements
 *
