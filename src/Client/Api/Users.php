@@ -3,11 +3,13 @@
 namespace KayedSpace\N8n\Client\Api;
 
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\RequestException;
 
 class Users extends AbstractApi
 {
     /**
      * @throws ConnectionException
+     * @throws RequestException
      */
     public function list(array $filters = []): array
     {
@@ -17,6 +19,7 @@ class Users extends AbstractApi
 
     /**
      * @throws ConnectionException
+     * @throws RequestException
      */
     public function create(array $userPayloads): array
     {
@@ -26,6 +29,7 @@ class Users extends AbstractApi
 
     /**
      * @throws ConnectionException
+     * @throws RequestException
      */
     public function get(string $idOrEmail, bool $includeRole = false): array
     {
@@ -34,6 +38,7 @@ class Users extends AbstractApi
 
     /**
      * @throws ConnectionException
+     * @throws RequestException
      */
     public function delete(string $idOrEmail)
     {
@@ -42,6 +47,7 @@ class Users extends AbstractApi
 
     /**
      * @throws ConnectionException
+     * @throws RequestException
      */
     public function changeRole(string $idOrEmail, string $newRoleName): array
     {

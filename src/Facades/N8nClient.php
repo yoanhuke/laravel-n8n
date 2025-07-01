@@ -2,6 +2,7 @@
 
 namespace KayedSpace\N8n\Facades;
 
+use Illuminate\Support\Facades\Facade;
 use KayedSpace\N8n\Client\Api\Audit;
 use KayedSpace\N8n\Client\Api\Credentials;
 use KayedSpace\N8n\Client\Api\Executions;
@@ -12,7 +13,7 @@ use KayedSpace\N8n\Client\Api\Users;
 use KayedSpace\N8n\Client\Api\Variables;
 use KayedSpace\N8n\Client\Api\Workflows;
 use KayedSpace\N8n\Client\Webhook\Webhooks;
-use Illuminate\Support\Facades\Facade;
+
 /**
  * @method static Webhooks webhooks(string $method = 'get')
  * @method static Audit audit()

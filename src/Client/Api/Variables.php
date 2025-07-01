@@ -3,11 +3,13 @@
 namespace KayedSpace\N8n\Client\Api;
 
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\RequestException;
 
 class Variables extends AbstractApi
 {
     /**
      * @throws ConnectionException
+     * @throws RequestException
      */
     public function create(array $payload): array
     {
@@ -16,6 +18,7 @@ class Variables extends AbstractApi
 
     /**
      * @throws ConnectionException
+     * @throws RequestException
      */
     public function list(int $limit = 100, ?string $cursor = null): array
     {
@@ -27,6 +30,7 @@ class Variables extends AbstractApi
 
     /**
      * @throws ConnectionException
+     * @throws RequestException
      */
     public function delete(string $id): void
     {
@@ -35,6 +39,7 @@ class Variables extends AbstractApi
 
     /**
      * @throws ConnectionException
+     * @throws RequestException
      */
     public function update(string $id, array $payload): void
     {

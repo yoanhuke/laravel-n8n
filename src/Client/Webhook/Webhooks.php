@@ -4,6 +4,7 @@ namespace KayedSpace\N8n\Client\Webhook;
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Config;
 
 class Webhooks
@@ -30,11 +31,12 @@ class Webhooks
 
     /**
      * @throws ConnectionException
+     * @throws RequestException
      */
     public function request($path, array $data = []): ?array
     {
         return $this->httpClient
-            ->when($this->basicAuth, fn ($request) => $request->withBasicAuth($this->basicAuth['username'], $this->basicAuth['password']))
+            ->when($this->basicAuth, fn($request) => $request->withBasicAuth($this->basicAuth['username'], $this->basicAuth['password']))
             ->{$this->method}($path, $data)
             ->json();
     }
