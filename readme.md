@@ -64,7 +64,7 @@ N8N_WEBHOOK_PASSWORD=your_webhook_password
 use N8nClient;
 
 // trigger webhook
-$webhookTrigger =N8nClient::webhooks()->trigger("path-to-webhook",$payload);
+$webhookTrigger =N8nClient::webhooks()->request("path-to-webhook",$payload);
 
 // List all workflows
 $workflows = N8nClient::workflows()->list();
@@ -80,15 +80,31 @@ $status = N8nClient::executions()->get($execution['id'], includeData: true);
 The Webhooks class enables sending HTTP requests to n8n workflow webhook trigger URLs, supporting multiple HTTP verbs (
 GET, POST, etc.) and basic authentication (if configured).
 
+> basic auth is applied by default if `N8N_USERNAME`, `N8N8_WEBHOOK_PASSOWRD` are set in the .env file.
+
+**Example:**
+```php
+//request a webhook
+$webhookTrigger =N8nClient::webhooks()->request("path-to-webhook",$payload);
+
+//request a webhook with custom basic auth credentials
+//overwrites values provided on .env` file 
+$webhookTrigger =N8nClient::withBasicAuth("custom-username","custom-password")->request("path-to-webhook",$payload);
+
+//request a  webhook without  auth
+$webhookTrigger =N8nClient::withoutBasicAuth()->request("path-to-webhook",$payload);
+
+```
+
 ## 📚 Full API Resource Reference
 
 Below is an exhaustive reference covering every resource and method provided.
 
 ### 🕵 Audit
 
-| Method                                    | Description                                                          | HTTP Method & Path |
-|-------------------------------------------|----------------------------------------------------------------------|--------------------|
-| `generate(array $additionalOptions = [])` | Generate a full audit report based on optional categories or filters | `POST /audit`      |
+| Method                                    | HTTP Method & Path | Description                                                           |
+|-------------------------------------------|--------------------|-----------------------------------------------------------------------|
+| `generate(array $additionalOptions = [])` | `POST /audit`      | Generate a full audit report based on optional categories or filters  |
 
 **Description:**
 This endpoint performs a security audit of your n8n instance and returns diagnostics grouped by category. It must be
