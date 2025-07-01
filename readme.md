@@ -50,10 +50,10 @@ N8N_TIMEOUT=120
 N8N_THROW=true
 N8N_RETRY=3
 
-N8N_BASE_URI=https://your-n8n-instance.com/api/v1
+N8N_API_BASE_URL=https://your-n8n-instance.com/api/v1
 N8N_API_KEY=your_api_key
 
-N8N_WEBHOOK_BASE_URI=https://your-n8n-instance.com/webhook
+N8N_WEBHOOK_BASE_URL=https://your-n8n-instance.com/webhook
 N8N_WEBHOOK_USERNAME==your_webhook_username
 N8N_WEBHOOK_PASSWORD=your_webhook_password
 ```
