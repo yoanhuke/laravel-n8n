@@ -47,7 +47,8 @@
   },
   "require-dev": {
     "pestphp/pest": "^3.8",
-    "pestphp/pest-plugin-laravel": "^3.2"
+    "pestphp/pest-plugin-laravel": "^3.2",
+    "orchestra/testbench": "^10.4"
   },
   "config": {
     "allow-plugins": {
