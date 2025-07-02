@@ -33,7 +33,7 @@ abstract class AbstractApi
         }
 
         return $this->httpClient
-            ->{$method}($uri, $data)
+            ->{$method->value}($uri, $data)
             ->json();
     }
 
