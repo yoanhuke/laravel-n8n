@@ -25,6 +25,11 @@
       "KayedSpace\\N8n\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
   "extra": {
     "laravel": {
       "providers": [
@@ -39,5 +44,15 @@
     "php": ">=8.2",
     "illuminate/support": ">=10",
     "illuminate/http": ">=10"
+  },
+  "require-dev": {
+    "pestphp/pest": "^3.8",
+    "pestphp/pest-plugin-laravel": "^3.2",
+    "orchestra/testbench": "^10.4"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
   }
 }
