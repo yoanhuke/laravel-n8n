@@ -18,15 +18,16 @@ class Webhooks
         $username = Config::string('n8n.webhook.username');
         $password = Config::string('n8n.webhook.password');
         $baseUrl = Config::string('n8n.webhook.base_url');
+
         if ($username && $password) {
             $this->basicAuth = [
                 'username' => $username,
                 'password' => $password,
             ];
         }
+
         $this->httpClient = $httpClient->baseUrl($baseUrl);
         $this->method = strtolower($method);
-
     }
 
     /**

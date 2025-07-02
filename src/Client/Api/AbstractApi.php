@@ -34,7 +34,6 @@ abstract class AbstractApi
         return $this->httpClient
             ->{$method}($uri, $data)
             ->json();
-
     }
 
     private function prepareQuery(array $data): array
