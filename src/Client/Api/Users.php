@@ -4,6 +4,7 @@ namespace KayedSpace\N8n\Client\Api;
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
+use KayedSpace\N8n\Enums\RequestMethod;
 
 class Users extends AbstractApi
 {
@@ -14,7 +15,7 @@ class Users extends AbstractApi
     public function list(array $filters = []): array
     {
         // filters: limit, cursor, includeRole, projectId
-        return $this->request('get', '/users', $filters);
+        return $this->request(RequestMethod::Get, '/users', $filters);
     }
 
     /**
@@ -24,7 +25,7 @@ class Users extends AbstractApi
     public function create(array $userPayloads): array
     {
         // expects array of user objects
-        return $this->request('post', '/users', $userPayloads);
+        return $this->request(RequestMethod::Post, '/users', $userPayloads);
     }
 
     /**
@@ -33,7 +34,7 @@ class Users extends AbstractApi
      */
     public function get(string $idOrEmail, bool $includeRole = false): array
     {
-        return $this->request('get', "/users/{$idOrEmail}", ['includeRole' => $includeRole]);
+        return $this->request(RequestMethod::Get, "/users/{$idOrEmail}", ['includeRole' => $includeRole]);
     }
 
     /**
@@ -42,7 +43,7 @@ class Users extends AbstractApi
      */
     public function delete(string $idOrEmail)
     {
-        return $this->request('delete', "/users/{$idOrEmail}");
+        return $this->request(RequestMethod::Delete, "/users/{$idOrEmail}");
     }
 
     /**
@@ -51,6 +52,6 @@ class Users extends AbstractApi
      */
     public function changeRole(string $idOrEmail, string $newRoleName): array
     {
-        return $this->request('patch', "/users/{$idOrEmail}/role", ['newRoleName' => $newRoleName]);
+        return $this->request(RequestMethod::Patch, "/users/{$idOrEmail}/role", ['newRoleName' => $newRoleName]);
     }
 }

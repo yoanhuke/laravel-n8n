@@ -4,6 +4,7 @@ namespace KayedSpace\N8n\Client\Api;
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
+use KayedSpace\N8n\Enums\RequestMethod;
 
 class Projects extends AbstractApi
 {
@@ -13,7 +14,7 @@ class Projects extends AbstractApi
      */
     public function create(array $payload): array
     {
-        return $this->request('post', '/projects', $payload);
+        return $this->request(RequestMethod::Post, '/projects', $payload);
     }
 
     /**
@@ -22,7 +23,7 @@ class Projects extends AbstractApi
      */
     public function list(int $limit = 100, ?string $cursor = null): array
     {
-        return $this->request('get', '/projects', array_filter([
+        return $this->request(RequestMethod::Get, '/projects', array_filter([
             'limit' => $limit,
             'cursor' => $cursor,
         ]));
@@ -34,7 +35,7 @@ class Projects extends AbstractApi
      */
     public function update(string $projectId, array $payload): void
     {
-        $this->request('put', "/projects/{$projectId}", $payload); // 204
+        $this->request(RequestMethod::Put, "/projects/{$projectId}", $payload); // 204
     }
 
     /**
@@ -43,7 +44,7 @@ class Projects extends AbstractApi
      */
     public function delete(string $projectId): void
     {
-        $this->request('delete', "/projects/{$projectId}"); // 204
+        $this->request(RequestMethod::Delete, "/projects/{$projectId}"); // 204
     }
 
     /**
@@ -52,7 +53,7 @@ class Projects extends AbstractApi
      */
     public function addUsers(string $projectId, array $relations): void
     {
-        $this->request('post', "/projects/{$projectId}/users", ['relations' => $relations]);
+        $this->request(RequestMethod::Post, "/projects/{$projectId}/users", ['relations' => $relations]);
     }
 
     /**
@@ -61,7 +62,7 @@ class Projects extends AbstractApi
      */
     public function changeUserRole(string $projectId, string $userId, string $role): void
     {
-        $this->request('patch', "/projects/{$projectId}/users/{$userId}", ['role' => $role]);
+        $this->request(RequestMethod::Patch, "/projects/{$projectId}/users/{$userId}", ['role' => $role]);
     }
 
     /**
@@ -70,6 +71,6 @@ class Projects extends AbstractApi
      */
     public function removeUser(string $projectId, string $userId): void
     {
-        $this->request('delete', "/projects/{$projectId}/users/{$userId}");
+        $this->request(RequestMethod::Delete, "/projects/{$projectId}/users/{$userId}");
     }
 }

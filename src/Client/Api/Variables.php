@@ -4,6 +4,7 @@ namespace KayedSpace\N8n\Client\Api;
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
+use KayedSpace\N8n\Enums\RequestMethod;
 
 class Variables extends AbstractApi
 {
@@ -13,7 +14,7 @@ class Variables extends AbstractApi
      */
     public function create(array $payload): array
     {
-        return $this->request('post', '/variables', $payload);
+        return $this->request(RequestMethod::Post, '/variables', $payload);
     }
 
     /**
@@ -22,7 +23,7 @@ class Variables extends AbstractApi
      */
     public function list(int $limit = 100, ?string $cursor = null): array
     {
-        return $this->request('get', '/variables', array_filter([
+        return $this->request(RequestMethod::Get, '/variables', array_filter([
             'limit' => $limit,
             'cursor' => $cursor,
         ]));
@@ -34,7 +35,7 @@ class Variables extends AbstractApi
      */
     public function delete(string $id): void
     {
-        $this->request('delete', "/variables/{$id}"); // 204
+        $this->request(RequestMethod::Delete, "/variables/{$id}"); // 204
     }
 
     /**
@@ -43,6 +44,6 @@ class Variables extends AbstractApi
      */
     public function update(string $id, array $payload): void
     {
-        $this->request('put', "/variables/{$id}", $payload); // 204
+        $this->request(RequestMethod::Put, "/variables/{$id}", $payload); // 204
     }
 }

@@ -4,6 +4,7 @@ namespace KayedSpace\N8n\Client\Api;
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
+use KayedSpace\N8n\Enums\RequestMethod;
 
 class Credentials extends AbstractApi
 {
@@ -13,7 +14,7 @@ class Credentials extends AbstractApi
      */
     public function create(array $payload): array
     {
-        return $this->request('post', '/credentials', $payload);
+        return $this->request(RequestMethod::Post, '/credentials', $payload);
     }
 
     /**
@@ -22,7 +23,7 @@ class Credentials extends AbstractApi
      */
     public function list(int $limit = 100, ?string $cursor = null): array
     {
-        return $this->request('get', '/credentials', array_filter([
+        return $this->request(RequestMethod::Get, '/credentials', array_filter([
             'limit' => $limit,
             'cursor' => $cursor,
         ]));
@@ -34,7 +35,7 @@ class Credentials extends AbstractApi
      */
     public function get(string $id): array
     {
-        return $this->request('get', "/credentials/{$id}");
+        return $this->request(RequestMethod::Get, "/credentials/{$id}");
     }
 
     /**
@@ -43,7 +44,7 @@ class Credentials extends AbstractApi
      */
     public function delete(string $id): array
     {
-        return $this->request('delete', "/credentials/{$id}");
+        return $this->request(RequestMethod::Delete, "/credentials/{$id}");
     }
 
     /**
@@ -52,7 +53,7 @@ class Credentials extends AbstractApi
      */
     public function schema(string $typeName): array
     {
-        return $this->request('get', "/credentials/schema/{$typeName}");
+        return $this->request(RequestMethod::Get, "/credentials/schema/{$typeName}");
     }
 
     /**
@@ -61,7 +62,7 @@ class Credentials extends AbstractApi
      */
     public function transfer(string $id, string $destinationProjectId): array
     {
-        return $this->request('put', "/credentials/{$id}/transfer", [
+        return $this->request(RequestMethod::Put, "/credentials/{$id}/transfer", [
             'destinationProjectId' => $destinationProjectId,
         ]);
     }
