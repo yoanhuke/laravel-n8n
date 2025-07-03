@@ -4,6 +4,7 @@ namespace KayedSpace\N8n\Client\Api;
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
+use KayedSpace\N8n\Enums\RequestMethod;
 
 class Workflows extends AbstractApi
 {
@@ -13,7 +14,7 @@ class Workflows extends AbstractApi
      */
     public function create(array $payload): array
     {
-        return $this->request('post', '/workflows', $payload);
+        return $this->request(RequestMethod::Post, '/workflows', $payload);
     }
 
     /**
@@ -23,7 +24,7 @@ class Workflows extends AbstractApi
     public function list(array $filters = []): array
     {
         // filters: active, tags, name, projectId, excludePinnedData, limit, cursor
-        return $this->request('get', '/workflows', $filters);
+        return $this->request(RequestMethod::Get, '/workflows', $filters);
     }
 
     /**
@@ -32,7 +33,7 @@ class Workflows extends AbstractApi
      */
     public function get(string $id, bool $excludePinnedData = false): array
     {
-        return $this->request('get', "/workflows/{$id}", ['excludePinnedData' => $excludePinnedData]);
+        return $this->request(RequestMethod::Get, "/workflows/{$id}", ['excludePinnedData' => $excludePinnedData]);
     }
 
     /**
@@ -41,7 +42,7 @@ class Workflows extends AbstractApi
      */
     public function update(string $id, array $payload): array
     {
-        return $this->request('put', "/workflows/{$id}", $payload);
+        return $this->request(RequestMethod::Put, "/workflows/{$id}", $payload);
     }
 
     /**
@@ -50,7 +51,7 @@ class Workflows extends AbstractApi
      */
     public function delete(string $id): array
     {
-        return $this->request('delete', "/workflows/{$id}");
+        return $this->request(RequestMethod::Delete, "/workflows/{$id}");
     }
 
     /**
@@ -59,7 +60,7 @@ class Workflows extends AbstractApi
      */
     public function activate(string $id): array
     {
-        return $this->request('post', "/workflows/{$id}/activate");
+        return $this->request(RequestMethod::Post, "/workflows/{$id}/activate");
     }
 
     /**
@@ -68,7 +69,7 @@ class Workflows extends AbstractApi
      */
     public function deactivate(string $id): array
     {
-        return $this->request('post', "/workflows/{$id}/deactivate");
+        return $this->request(RequestMethod::Post, "/workflows/{$id}/deactivate");
     }
 
     /**
@@ -77,7 +78,7 @@ class Workflows extends AbstractApi
      */
     public function transfer(string $id, string $destinationProjectId): array
     {
-        return $this->request('put', "/workflows/{$id}/transfer", [
+        return $this->request(RequestMethod::Put, "/workflows/{$id}/transfer", [
             'destinationProjectId' => $destinationProjectId,
         ]);
     }
@@ -88,7 +89,7 @@ class Workflows extends AbstractApi
      */
     public function tags(string $id): array
     {
-        return $this->request('get', "/workflows/{$id}/tags");
+        return $this->request(RequestMethod::Get, "/workflows/{$id}/tags");
     }
 
     /**
@@ -97,6 +98,6 @@ class Workflows extends AbstractApi
      */
     public function updateTags(string $id, array $tagIds): array
     {
-        return $this->request('put', "/workflows/{$id}/tags", $tagIds);
+        return $this->request(RequestMethod::Put, "/workflows/{$id}/tags", $tagIds);
     }
 }

@@ -4,6 +4,7 @@ namespace KayedSpace\N8n\Client\Api;
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
+use KayedSpace\N8n\Enums\RequestMethod;
 
 class Executions extends AbstractApi
 {
@@ -15,7 +16,7 @@ class Executions extends AbstractApi
     {
         // filters: includeData, status, workflowId, projectId, limit, cursor
 
-        return $this->request('get', '/executions', $filters);
+        return $this->request(RequestMethod::Get, '/executions', $filters);
     }
 
     /**
@@ -24,7 +25,7 @@ class Executions extends AbstractApi
      */
     public function get(int $id, bool $includeData = false): array
     {
-        return $this->request('get', "/executions/{$id}", ['includeData' => $includeData]);
+        return $this->request(RequestMethod::Get, "/executions/{$id}", ['includeData' => $includeData]);
     }
 
     /**
@@ -33,6 +34,6 @@ class Executions extends AbstractApi
      */
     public function delete(int $id): array
     {
-        return $this->request('delete', "/executions/{$id}");
+        return $this->request(RequestMethod::Delete, "/executions/{$id}");
     }
 }

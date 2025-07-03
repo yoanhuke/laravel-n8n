@@ -6,27 +6,28 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Config;
+use KayedSpace\N8n\Enums\RequestMethod;
 
 class Webhooks
 {
-    protected string $method = 'get';
-
     private ?array $basicAuth;
 
-    public function __construct(protected PendingRequest $httpClient, $method)
-    {
+    public function __construct(
+        protected PendingRequest $httpClient,
+        protected RequestMethod $method = RequestMethod::Get
+    ) {
         $username = Config::string('n8n.webhook.username');
         $password = Config::string('n8n.webhook.password');
         $baseUrl = Config::string('n8n.webhook.base_url');
+
         if ($username && $password) {
             $this->basicAuth = [
                 'username' => $username,
                 'password' => $password,
             ];
         }
-        $this->httpClient = $httpClient->baseUrl($baseUrl);
-        $this->method = strtolower($method);
 
+        $this->httpClient = $httpClient->baseUrl($baseUrl);
     }
 
     /**

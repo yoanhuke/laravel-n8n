@@ -4,6 +4,7 @@ namespace KayedSpace\N8n\Client\Api;
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
+use KayedSpace\N8n\Enums\RequestMethod;
 
 class Tags extends AbstractApi
 {
@@ -13,7 +14,7 @@ class Tags extends AbstractApi
      */
     public function create(array $payload): array
     {
-        return $this->request('post', '/tags', $payload);
+        return $this->request(RequestMethod::Post, '/tags', $payload);
     }
 
     /**
@@ -22,7 +23,7 @@ class Tags extends AbstractApi
      */
     public function list(int $limit = 100, ?string $cursor = null): array
     {
-        return $this->request('get', '/tags', array_filter([
+        return $this->request(RequestMethod::Get, '/tags', array_filter([
             'limit' => $limit,
             'cursor' => $cursor,
         ]));
@@ -34,7 +35,7 @@ class Tags extends AbstractApi
      */
     public function get(string $id): array
     {
-        return $this->request('get', "/tags/{$id}");
+        return $this->request(RequestMethod::Get, "/tags/{$id}");
     }
 
     /**
@@ -43,7 +44,7 @@ class Tags extends AbstractApi
      */
     public function update(string $id, array $payload): array
     {
-        return $this->request('put', "/tags/{$id}", $payload);
+        return $this->request(RequestMethod::Put, "/tags/{$id}", $payload);
     }
 
     /**
@@ -52,6 +53,6 @@ class Tags extends AbstractApi
      */
     public function delete(string $id): array
     {
-        return $this->request('delete', "/tags/{$id}");
+        return $this->request(RequestMethod::Delete, "/tags/{$id}");
     }
 }

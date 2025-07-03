@@ -6,6 +6,7 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Config;
+use KayedSpace\N8n\Enums\RequestMethod;
 
 abstract class AbstractApi
 {
@@ -25,16 +26,15 @@ abstract class AbstractApi
      * @throws ConnectionException
      * @throws RequestException
      */
-    protected function request(string $method, string $uri, array $data = []): array
+    protected function request(RequestMethod $method, string $uri, array $data = []): array
     {
-        if ($method == 'get') {
+        if (RequestMethod::Get === $method) {
             $data = $this->prepareQuery($data);
         }
 
         return $this->httpClient
-            ->{$method}($uri, $data)
+            ->{$method->value}($uri, $data)
             ->json();
-
     }
 
     private function prepareQuery(array $data): array
