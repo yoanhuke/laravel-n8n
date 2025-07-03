@@ -1,16 +1,15 @@
 <?php
 
+use KayedSpace\N8n\Client\Api\Audit;
+use KayedSpace\N8n\Client\Api\Credentials;
+use KayedSpace\N8n\Client\Api\Executions;
+use KayedSpace\N8n\Client\Api\Projects;
+use KayedSpace\N8n\Client\Api\SourceControl;
+use KayedSpace\N8n\Client\Api\Tags;
+use KayedSpace\N8n\Client\Api\Users;
+use KayedSpace\N8n\Client\Api\Variables;
+use KayedSpace\N8n\Client\Api\Workflows;
 use KayedSpace\N8n\Client\N8nClient;
-use KayedSpace\N8n\Client\Api\{Audit,
-    Tags,
-    Variables,
-    Credentials,
-    Executions,
-    Projects,
-    SourceControl,
-    Users,
-    Workflows
-};
 use KayedSpace\N8n\Client\Webhook\Webhooks;
 
 test('returns correct API instances', function () {

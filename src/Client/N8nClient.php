@@ -27,9 +27,9 @@ class N8nClient
         $throw = Config::boolean('n8n.throw');
         $retry = Config::integer('n8n.retry');
 
-        $this->httpClient = Http::when($timeout, fn($request) => $request->timeout($timeout))
-            ->when($throw, fn($request) => $request->throwIf($throw))
-            ->when($retry, fn($request) => $request->retry($retry));
+        $this->httpClient = Http::when($timeout, fn ($request) => $request->timeout($timeout))
+            ->when($throw, fn ($request) => $request->throwIf($throw))
+            ->when($retry, fn ($request) => $request->retry($retry));
     }
 
     public function webhooks($method = RequestMethod::Post): Webhooks
@@ -54,6 +54,7 @@ class N8nClient
 
     public function workflows(): Workflows
     {
+
         return new Workflows($this->httpClient);
     }
 
