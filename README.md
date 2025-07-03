@@ -80,7 +80,7 @@ $status = N8nClient::executions()->get($execution['id'], includeData: true);
 The Webhooks class enables sending HTTP requests to n8n workflow webhook trigger URLs, supporting multiple HTTP verbs (
 GET, POST, etc.) and basic authentication (if configured).
 
-> basic auth is applied by default if `N8N_USERNAME`, `N8N8_WEBHOOK_PASSOWRD` are set in the .env file.
+> basic auth is applied by default if `N8N_WEBHOOK_USERNAME`, `N8N8_WEBHOOK_PASSOWRD` are set in the .env file.
 
 **Example:**
 
