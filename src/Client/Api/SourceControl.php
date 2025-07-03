@@ -4,6 +4,7 @@ namespace KayedSpace\N8n\Client\Api;
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
+use KayedSpace\N8n\Enums\RequestMethod;
 
 class SourceControl extends AbstractApi
 {
@@ -13,6 +14,6 @@ class SourceControl extends AbstractApi
      */
     public function pull(array $payload): array
     {
-        return $this->request('post', '/source-control/pull', $payload);
+        return $this->request(RequestMethod::Post, '/source-control/pull', $payload);
     }
 }
