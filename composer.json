@@ -48,11 +48,15 @@
   "require-dev": {
     "pestphp/pest": "^3.8",
     "pestphp/pest-plugin-laravel": "^3.2",
-    "orchestra/testbench": "^10.4"
+    "orchestra/testbench": "^10.4",
+    "laravel/pint": "^1.23"
   },
   "config": {
     "allow-plugins": {
       "pestphp/pest-plugin": true
     }
+  },
+  "scripts": {
+    "pint": "pint"
   }
 }

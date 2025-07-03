@@ -25,7 +25,6 @@ use KayedSpace\N8n\Client\Webhook\Webhooks;
  * @method static Variables variables()
  * @method static Projects projects()
  * @method static SourceControl sourceControl()
- *
  */
 class N8nClient extends Facade
 {
