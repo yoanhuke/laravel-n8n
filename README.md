@@ -1,4 +1,4 @@
-# n8n Laravel Client
+<h1> Laravel N8N - A complete, expressive, and fluent Laravel client for the n8n</h1>
 
 A complete, expressive, and fluent Laravel client for the n8n public REST API and Webhooks Triggering, empowering PHP
 developers to interact
@@ -83,6 +83,7 @@ GET, POST, etc.) and basic authentication (if configured).
 > basic auth is applied by default if `N8N_USERNAME`, `N8N8_WEBHOOK_PASSOWRD` are set in the .env file.
 
 **Example:**
+
 ```php
 //request a webhook
 $webhookTrigger =N8nClient::webhooks()->request("path-to-webhook",$payload);
@@ -102,9 +103,9 @@ Below is an exhaustive reference covering every resource and method provided.
 
 ### 🕵 Audit
 
-| Method                                    | HTTP Method & Path | Description                                                           |
-|-------------------------------------------|--------------------|-----------------------------------------------------------------------|
-| `generate(array $additionalOptions = [])` | `POST /audit`      | Generate a full audit report based on optional categories or filters  |
+| Method                                    | HTTP Method & Path | Description                                                          |
+|-------------------------------------------|--------------------|----------------------------------------------------------------------|
+| `generate(array $additionalOptions = [])` | `POST /audit`      | Generate a full audit report based on optional categories or filters |
 
 **Description:**
 This endpoint performs a security audit of your n8n instance and returns diagnostics grouped by category. It must be
@@ -293,12 +294,20 @@ N8nClient::workflows()->activate($wf['id']);
 Contributions are welcome! If you have a feature request, bug report, or improvement:
 
 1. Fork the repository
-2. Create your feature branch: `git checkout -b feature/my-feature`
-3. Commit your changes: `git commit -am 'Add new feature'`
+2. Create your feature branch:
+
+   Choose the prefix that matches the purpose of your work:
+  - feature/your-description – new functionality
+  - bugfix/your-description – fix for an existing issue
+  - hotfix/your-description – urgent production fix
+
+3. Run Laravel Pint to ensure code style is consistent:  `composer pint`
+4. Add or update tests and make sure they pass:  `composer test`
+3. Commit your changes: `git commit -am "Add: my awesome addition"`
 4. Push to the branch: `git push origin feature/my-feature`
 5. Open a pull request
 
-Please adhere to PSR-12 and include tests where applicable.
+Please adhere to laravel pint and include tests where applicable.
 
 ## 🛠 Support
 
@@ -307,7 +316,6 @@ If you encounter any issues or have questions:
 * Open an issue in the GitHub repository
 * Use Discussions for non-bug topics or feature proposals
 * Pull requests are always welcome for fixes and improvements
-*
 
 ## 📄 License
 

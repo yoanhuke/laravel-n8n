@@ -57,6 +57,7 @@
     }
   },
   "scripts": {
-    "pint": "pint"
+    "pint": "pint",
+    "test": "pest"
   }
 }
