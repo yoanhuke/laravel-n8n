@@ -1,4 +1,4 @@
-<h1> Laravel N8N - A complete, expressive, and fluent Laravel client for the n8n</h1>
+<h1> Laravel N8N - A complete, expressive, and fluent N8N Laravel client</h1>
 
 A complete, expressive, and fluent Laravel client for the n8n public REST API and Webhooks Triggering, empowering PHP
 developers to interact
