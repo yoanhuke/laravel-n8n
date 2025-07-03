@@ -15,6 +15,7 @@ use KayedSpace\N8n\Client\Api\Users;
 use KayedSpace\N8n\Client\Api\Variables;
 use KayedSpace\N8n\Client\Api\Workflows;
 use KayedSpace\N8n\Client\Webhook\Webhooks;
+use KayedSpace\N8n\Enums\RequestMethod;
 
 class N8nClient
 {
@@ -31,7 +32,7 @@ class N8nClient
             ->when($retry, fn($request) => $request->retry($retry));
     }
 
-    public function webhooks($method = 'post'): Webhooks
+    public function webhooks($method = RequestMethod::Post): Webhooks
     {
         return new Webhooks($this->httpClient, $method);
     }
