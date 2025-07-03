@@ -39,7 +39,7 @@ class Webhooks
         return $this->httpClient
             ->when($this->basicAuth,
                 fn ($request) => $request->withBasicAuth($this->basicAuth['username'], $this->basicAuth['password']))
-            ->{$this->method}($path, $data)
+            ->{$this->method->value}($path, $data)
             ->json();
     }
 
