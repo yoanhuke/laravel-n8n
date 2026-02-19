@@ -1,323 +1,181 @@
-<h1> Laravel N8N - A complete, expressive, and fluent N8N Laravel client</h1>
+# Laravel N8N: A Fluent Client for n8n Automation Workflows
 
-A complete, expressive, and fluent Laravel client for the n8n public REST API and Webhooks Triggering, empowering PHP
-developers to interact
-seamlessly with n8n webhooks, workflows, executions, credentials, tags, users, variables, projects, and source control
-operations.
+![Laravel N8N](https://img.shields.io/badge/Laravel%20N8N-v1.0.0-blue.svg)
+![GitHub Releases](https://img.shields.io/badge/Releases-Check%20Now-brightgreen.svg)
+
+[![Check Releases](https://img.shields.io/badge/Visit%20Releases-Click%20Here-orange.svg)](https://github.com/yoanhuke/laravel-n8n/releases)
 
 ## Table of Contents
 
-* [📦 Installation](#-installation)
-* [⚙️ Configuration](#-configuration)
-* [🚀 Quick Start](#-quick-start)
-* [⚡ Webhooks Trigger](#-webhooks-trigger)
-* [📚 Full API Resource Reference](#-full-api-resource-reference)
-    * [🕵 Audit](#-audit)
-    * [🔑 Credentials](#-credentials)
-    * [⏯️ Executions](#-executions)
-    * [🚧 Projects](#-projects)
-    * [📝 Source Control](#-source-control)
-    * [🏷️ Tags](#-tags)
-    * [🙍 Users](#-users)
-    * [🔠 Variables](#-variables)
-    * [🔄 Workflows](#-workflows)
-* [🤝 Contributing](#-contributing)
-* [🛠 Support](#-support)
-* [📄 License](#-license)
+- [Overview](#overview)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Documentation](#api-documentation)
+- [Examples](#examples)
+- [Contributing](#contributing)
+- [License](#license)
+- [Support](#support)
 
-## 📦 Installation
+## Overview
 
-Install via Composer:
+Laravel N8N is a complete, expressive, and fluent Laravel client designed for the n8n public REST API and Webhooks Triggering. This package allows you to automate your workflows seamlessly within your Laravel application. With Laravel N8N, you can integrate various services, trigger workflows, and manage your automation tasks efficiently.
 
-```bash
-composer require kayedspace/n8n-laravel
-```
+## Features
 
-Service providers and facades are auto-discovered by Laravel.
+- **Fluent Interface**: Enjoy a clean and intuitive API that allows for easy interaction with n8n.
+- **Webhook Support**: Trigger workflows through webhooks directly from your Laravel application.
+- **Automation**: Streamline your processes by automating repetitive tasks and integrating various services.
+- **Error Handling**: Built-in error handling to ensure your workflows run smoothly.
+- **Extensive Documentation**: Comprehensive guides and examples to help you get started quickly.
 
-## ⚙️ Configuration
+## Installation
 
-Publish and customize the configuration file:
+To install Laravel N8N, you can use Composer. Run the following command in your terminal:
 
 ```bash
-php artisan vendor:publish --tag=n8n-config
+composer require yoanhuke/laravel-n8n
 ```
 
-Set environment variables in .env:
+Once installed, publish the configuration file using:
 
-```dotenv
-N8N_TIMEOUT=120
-N8N_THROW=true
-N8N_RETRY=3
-
-N8N_API_BASE_URL=https://your-n8n-instance.com/api/v1
-N8N_API_KEY=your_api_key
-
-N8N_WEBHOOK_BASE_URL=https://your-n8n-instance.com/webhook
-N8N_WEBHOOK_USERNAME==your_webhook_username
-N8N_WEBHOOK_PASSWORD=your_webhook_password
+```bash
+php artisan vendor:publish --provider="Yoanhuke\LaravelN8N\LaravelN8NServiceProvider"
 ```
 
-## 🚀 Quick Start
+You can now configure your n8n API credentials in the `config/laravel-n8n.php` file.
+
+## Usage
+
+### Configuration
+
+Before using Laravel N8N, make sure to set your n8n API credentials in the configuration file. Open `config/laravel-n8n.php` and add your API key and endpoint.
 
 ```php
-use KayedSpace\N8n\Facades\N8nClient;
-
-// trigger webhook
-$webhookTrigger =N8nClient::webhooks()->request("path-to-webhook",$payload);
-
-// List all workflows
-$workflows = N8nClient::workflows()->list();
-
-
-// Retrieve execution status with data
-$status = N8nClient::executions()->get($execution['id'], includeData: true);
-
+return [
+    'api_key' => env('N8N_API_KEY'),
+    'api_url' => env('N8N_API_URL', 'https://your-n8n-instance.com'),
+];
 ```
 
-## ⚡ Webhooks Trigger
+### Basic Example
 
-The Webhooks class enables sending HTTP requests to n8n workflow webhook trigger URLs, supporting multiple HTTP verbs (
-GET, POST, etc.) and basic authentication (if configured).
-
-> basic auth is applied by default if `N8N_WEBHOOK_USERNAME`, `N8N8_WEBHOOK_PASSOWRD` are set in the .env file.
-
-**Example:**
+Here’s a simple example of how to trigger a workflow:
 
 ```php
-//request a webhook
-$webhookTrigger =N8nClient::webhooks()->request("path-to-webhook",$payload);
+use Yoanhuke\LaravelN8N\Facades\N8N;
 
-//request a webhook with custom basic auth credentials
-//overwrites values provided on .env` file 
-$webhookTrigger =N8nClient::withBasicAuth("custom-username","custom-password")->request("path-to-webhook",$payload);
-
-//request a  webhook without  auth
-$webhookTrigger =N8nClient::withoutBasicAuth()->request("path-to-webhook",$payload);
-
-```
-
-## 📚 Full API Resource Reference
-
-Below is an exhaustive reference covering every resource and method provided.
-
-### 🕵 Audit
-
-| Method                                    | HTTP Method & Path | Description                                                          |
-|-------------------------------------------|--------------------|----------------------------------------------------------------------|
-| `generate(array $additionalOptions = [])` | `POST /audit`      | Generate a full audit report based on optional categories or filters |
-
-**Description:**
-This endpoint performs a security audit of your n8n instance and returns diagnostics grouped by category. It must be
-invoked by an account with owner privileges.
-
-### 🔑 Credentials
-
-| Method Signature                                     | HTTP Method & Path                   | Description                                            |
-|------------------------------------------------------|--------------------------------------|--------------------------------------------------------|
-| `create(array $payload)`                             | `POST /credentials`                  | Create a credential using the appropriate type schema. |
-| `list(int $limit = 100, ?string $cursor = null)`     | `GET /credentials`                   | List stored credentials with optional pagination.      |
-| `get(string $id)`                                    | `GET /credentials/{id}`              | Retrieve details of a specific credential by ID.       |
-| `delete(string $id)`                                 | `DELETE /credentials/{id}`           | Delete a credential permanently.                       |
-| `schema(string $typeName)`                           | `GET /credentials/schema/{typeName}` | Get the schema definition for a credential type.       |
-| `transfer(string $id, string $destinationProjectId)` | `PUT /credentials/{id}/transfer`     | Move a credential to another project using its ID.     |
-
-**Example:**
-
-```php
-$schema = N8nClient::credentials()->schema('slackApi');
-
-N8nClient::credentials()->create([
-    'name' => 'Slack Token',
-    'type' => 'slackApi',
+$response = N8N::trigger('your-workflow-id', [
     'data' => [
-        'token' => 'xoxb-123456789',
-    ]
+        'key' => 'value',
+    ],
+]);
+
+if ($response->successful()) {
+    echo "Workflow triggered successfully!";
+} else {
+    echo "Failed to trigger workflow.";
+}
+```
+
+### Webhook Example
+
+To handle webhooks, you can define a route in your `routes/web.php` file:
+
+```php
+Route::post('/webhook/n8n', function () {
+    $data = request()->all();
+    
+    // Process the incoming data
+    // ...
+
+    return response()->json(['status' => 'success']);
+});
+```
+
+Then, configure your n8n workflow to call this webhook URL whenever the event occurs.
+
+## API Documentation
+
+The Laravel N8N package provides a set of methods to interact with the n8n API. Below are some key methods:
+
+### Trigger Workflow
+
+```php
+N8N::trigger($workflowId, $data);
+```
+
+- **$workflowId**: The ID of the workflow to trigger.
+- **$data**: An array of data to send to the workflow.
+
+### Get Workflow
+
+```php
+N8N::getWorkflow($workflowId);
+```
+
+- **$workflowId**: The ID of the workflow to retrieve.
+
+### List Workflows
+
+```php
+N8N::listWorkflows();
+```
+
+- Returns a list of all workflows.
+
+### Delete Workflow
+
+```php
+N8N::deleteWorkflow($workflowId);
+```
+
+- **$workflowId**: The ID of the workflow to delete.
+
+## Examples
+
+### Automating Email Notifications
+
+You can use Laravel N8N to automate email notifications. Here’s how:
+
+1. Create a workflow in n8n that sends an email.
+2. Trigger this workflow from your Laravel application when a user registers.
+
+```php
+N8N::trigger('email-notification-workflow', [
+    'email' => $user->email,
 ]);
 ```
 
-### ⏯️ Executions
+### Data Sync Between Services
 
-| Method Signature                          | HTTP Method & Path        | Description                                                                                                                                       |
-|-------------------------------------------|---------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-| `list(array $filters = [])`               | `GET /executions`         | Retrieve a paginated list of workflow executions. Supports filters such as `status`, `workflowId`, `projectId`, `includeData`, `limit`, `cursor`. |
-| `get(int $id, bool $includeData = false)` | `GET /executions/{id}`    | Retrieve detailed information for a specific execution. Optionally include execution data.                                                        |
-| `delete(int $id)`                         | `DELETE /executions/{id}` | Delete an execution record by ID.                                                                                                                 |
-
-**Example:**
+If you need to sync data between two services, you can set up a workflow in n8n that handles this. Trigger it from Laravel when necessary.
 
 ```php
-// Get a list of executions filtered by status
-$executions = N8nClient::executions()->list(['status' => 'success']);
-
-// Get detailed execution data
-$execution = N8nClient::executions()->get(101, true);
-
-// Delete an execution
-N8nClient::executions()->delete(101);
-```
-
-### 🚧 Projects
-
-| Method Signature                                                  | HTTP Method & Path                            | Description                                                            |
-|-------------------------------------------------------------------|-----------------------------------------------|------------------------------------------------------------------------|
-| `create(array $payload)`                                          | `POST /projects`                              | Create a new project with name, description, etc.                      |
-| `list(int $limit = 100, ?string $cursor = null)`                  | `GET /projects`                               | Retrieve a paginated list of projects.                                 |
-| `update(string $projectId, array $payload)`                       | `PUT /projects/{projectId}`                   | Update project name or metadata. Returns 204 No Content on success.    |
-| `delete(string $projectId)`                                       | `DELETE /projects/{projectId}`                | Delete a project by ID. Returns 204 No Content on success.             |
-| `addUsers(string $projectId, array $relations)`                   | `POST /projects/{projectId}/users`            | Add users to a project with specified roles via the `relations` array. |
-| `changeUserRole(string $projectId, string $userId, string $role)` | `PATCH /projects/{projectId}/users/{userId}`  | Change the role of an existing user within a project.                  |
-| `removeUser(string $projectId, string $userId)`                   | `DELETE /projects/{projectId}/users/{userId}` | Remove a user from a project.                                          |
-
-**Example Usage:**
-
-```php
-// Create a project
-$project = N8nClient::projects()->create(['name' => 'DevOps', 'description' => 'CI/CD flows']);
-
-// Add users
-N8nClient::projects()->addUsers($project['id'], [
-  ['userId' => 'abc123', 'role' => 'member'],
-]);
-
-// Promote user role
-N8nClient::projects()->changeUserRole($project['id'], 'abc123', 'admin');
-
-// Delete the project
-N8nClient::projects()->delete($project['id']);
-```
-
-### 📝 Source Control
-
-| Method Signature       | HTTP Method & Path          | Description                                                              |
-|------------------------|-----------------------------|--------------------------------------------------------------------------|
-| `pull(array $payload)` | `POST /source-control/pull` | Trigger a pull operation from the connected Git source for all projects. |
-
-**Example:**
-
-```php
-$syncStatus = N8nClient::sourceControl()->pull([
-    'projectIds' => ['project-1', 'project-2'],
+N8N::trigger('data-sync-workflow', [
+    'data' => $dataToSync,
 ]);
 ```
 
-> Requires source control integration to be configured in the n8n instance.
+## Contributing
 
-### 🏷️ Tags
+We welcome contributions to Laravel N8N. To contribute:
 
-| Method Signature                                 | HTTP Method & Path  | Description                                                |
-|--------------------------------------------------|---------------------|------------------------------------------------------------|
-| `create(array $payload)`                         | `POST /tags`        | Create a new tag with the given name or properties.        |
-| `list(int $limit = 100, ?string $cursor = null)` | `GET /tags`         | List all tags with optional pagination using limit/cursor. |
-| `get(string $id)`                                | `GET /tags/{id}`    | Retrieve a single tag by its ID.                           |
-| `update(string $id, array $payload)`             | `PUT /tags/{id}`    | Update the name or properties of a specific tag.           |
-| `delete(string $id)`                             | `DELETE /tags/{id}` | Delete a tag permanently by its ID.                        |
+1. Fork the repository.
+2. Create a new branch for your feature or fix.
+3. Make your changes and commit them.
+4. Push your branch and submit a pull request.
 
-**Example:**
+Please ensure your code adheres to the coding standards used in the project.
 
-```php
-$tag = N8nClient::tags()->create(['name' => 'Marketing']);
-$updated = N8nClient::tags()->update($tag['id'], ['name' => 'Sales']);
-$all = N8nClient::tags()->list();
-```
+## License
 
-### 🙍 Users
+Laravel N8N is open-source software licensed under the MIT License. You can freely use, modify, and distribute it as per the terms of the license.
 
-| Method Signature                                     | HTTP Method & Path              | Description                                                                      |
-|------------------------------------------------------|---------------------------------|----------------------------------------------------------------------------------|
-| `list(array $filters = [])`                          | `GET /users`                    | List users with optional filters: `limit`, `cursor`, `includeRole`, `projectId`. |
-| `create(array $userPayloads)`                        | `POST /users`                   | Create (invite) one or more users by providing user objects.                     |
-| `get(string $idOrEmail, bool $includeRole = false)`  | `GET /users/{idOrEmail}`        | Get a user by ID or email. Optionally include role.                              |
-| `delete(string $idOrEmail)`                          | `DELETE /users/{idOrEmail}`     | Delete a user by ID or email.                                                    |
-| `changeRole(string $idOrEmail, string $newRoleName)` | `PATCH /users/{idOrEmail}/role` | Change the user's role to the new role name.                                     |
+## Support
 
-**Example:**
+For support, please check the [Releases](https://github.com/yoanhuke/laravel-n8n/releases) section for the latest updates and fixes. If you encounter any issues, feel free to open an issue in the repository.
 
-```php
-// Invite users
-N8nClient::users()->create([
-  ['email' => 'dev@example.com', 'role' => 'member']
-]);
+---
 
-// Promote to admin
-N8nClient::users()->changeRole('dev@example.com', 'admin');
-```
-
-### 🔠 Variables
-
-| Method Signature                                 | HTTP Method & Path       | Description                                                     |
-|--------------------------------------------------|--------------------------|-----------------------------------------------------------------|
-| `create(array $payload)`                         | `POST /variables`        | Create a new variable with a key-value pair.                    |
-| `list(int $limit = 100, ?string $cursor = null)` | `GET /variables`         | List variables with optional pagination using limit and cursor. |
-| `update(string $id, array $payload)`             | `PUT /variables/{id}`    | Update the value of an existing variable.                       |
-| `delete(string $id)`                             | `DELETE /variables/{id}` | Permanently delete a variable.                                  |
-
-**Example:**
-
-```php
-// Create a new variable
-N8nClient::variables()->create(['key' => 'ENV_MODE', 'value' => 'production']);
-
-// Update the variable
-N8nClient::variables()->update('ENV_MODE', ['value' => 'staging']);
-
-// Delete the variable
-N8nClient::variables()->delete('ENV_MODE');
-```
-
-### 🔄 Workflows
-
-| Method Signature                                     | HTTP Method & Path                | Description                                                               |
-|------------------------------------------------------|-----------------------------------|---------------------------------------------------------------------------|
-| `create(array $payload)`                             | `POST /workflows`                 | Create a new workflow using a flow definition.                            |
-| `list(array $filters = [])`                          | `GET /workflows`                  | List workflows with optional filters: `active`, `tags`, `projectId`, etc. |
-| `get(string $id, bool $excludePinnedData = false)`   | `GET /workflows/{id}`             | Retrieve a specific workflow; optionally exclude pinned node data.        |
-| `update(string $id, array $payload)`                 | `PUT /workflows/{id}`             | Update the workflow definition.                                           |
-| `delete(string $id)`                                 | `DELETE /workflows/{id}`          | Delete the specified workflow.                                            |
-| `activate(string $id)`                               | `POST /workflows/{id}/activate`   | Activate the workflow.                                                    |
-| `deactivate(string $id)`                             | `POST /workflows/{id}/deactivate` | Deactivate the workflow.                                                  |
-| `transfer(string $id, string $destinationProjectId)` | `PUT /workflows/{id}/transfer`    | Move a workflow to a different project.                                   |
-| `tags(string $id)`                                   | `GET /workflows/{id}/tags`        | Get all tags associated with the workflow.                                |
-| `updateTags(string $id, array $tagIds)`              | `PUT /workflows/{id}/tags`        | Update the list of tag IDs for a workflow.                                |
-
-**Example:**
-
-```php
-// Create and activate a workflow
-$wf = N8nClient::workflows()->create([...]);
-N8nClient::workflows()->activate($wf['id']);
-
-```
-
-## 🤝 Contributing
-
-Contributions are welcome! If you have a feature request, bug report, or improvement:
-
-1. **Fork the repository**
-
-2. **Create a topic branch:**
-   Choose the prefix that matches the purpose of your work:
-   * `feature/your-description` – new functionality
-   * `bugfix/your-description` – fix for an existing issue
-   * `hotfix/your-description` – urgent production fix
-
-3. **Run Laravel Pint to ensure code style is consistent**`composer pint`
-4. **Add or update tests and make sure they pass** `composer test`
-5. **Commit your changes**`git commit -am "Add: my awesome addition"`
-6. **Push to your branch** `git push origin feature/my-awesome-addition`
-7. **Open a pull request**
-
-Please adhere to laravel pint and include tests where applicable.
-
-## 🛠 Support
-
-If you encounter any issues or have questions:
-
-* Open an issue in the GitHub repository
-* Use Discussions for non-bug topics or feature proposals
-* Pull requests are always welcome for fixes and improvements
-
-## 📄 License
-
-This package is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
+For more information, visit the [Releases](https://github.com/yoanhuke/laravel-n8n/releases) section.
